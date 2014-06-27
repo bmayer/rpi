@@ -39,9 +39,9 @@ GPIO.output(enable_b, True)
 
 def setStep(w1, w2, w3, w4):
   GPIO.output(coil_A_1_pin, w1)
-  #GPIO.output(coil_A_2_pin, w2)
-  #GPIO.output(coil_B_1_pin, w3)
-  #GPIO.output(coil_B_2_pin, w4)
+  GPIO.output(coil_A_2_pin, w2)
+  GPIO.output(coil_B_1_pin, w3)
+  GPIO.output(coil_B_2_pin, w4)
 
 # loop through step sequence based on number of steps
 
