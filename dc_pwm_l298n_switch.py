@@ -5,15 +5,15 @@ import time
 # use with L298N motor driver
 
 # en* pins enable the motor
-ena0 = 17 #outside pin
-ena1 = 18 #inside pin
+ena0 = 17 #outside pin white
+ena1 = 18 #inside pin blue
 
 # in* pins control the direction
-in1 = 24
-in2 = 25
+in1 = 24 #orange
+in2 = 25 #green
 
-sw0 = 22
-sw1 = 7
+sw0 = 22 #green
+sw1 = 4 #dk orange
 
 # output A pins connect to DC motor
 # +12v input can actually be any input voltage
