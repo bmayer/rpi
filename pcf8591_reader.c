@@ -8,7 +8,7 @@
 
 
 int main(void) {
-  int pin = 20;
+  int pin = 0; //ain0
   double pin_val;
 
   wiringPiSetupGpio();
@@ -20,5 +20,7 @@ int main(void) {
     printf("pin_val: %5.2f\n", pin_val);
     delay(500); //ms
   }
+
+  return(0);
 
 }

@@ -10,7 +10,7 @@ int main(void) {
   int a = 0;
   unsigned int rand;
   unsigned int *r; //i am a pointer to an integer var
-  char *dev = "/dev/urandom";
+  char *dev = "/dev/random";
   int myfile = open(dev, O_RDONLY);
 
   // &rand is an address operator
