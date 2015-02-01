@@ -9,9 +9,17 @@
 
 # define ENB0 19
 # define ENB1 26
-# define TRIGGER 20
+# define TRIGGER 20 //input - joy-stick
 # define RANGE 100  //pwm range
 # define PINBASE 120  //pcf pinbase
+
+/*
+test buy running the following:
+
+sudo gpio -g mode 20 up
+sudo gpio -g mode 20 down
+
+*/
 
 //prototypes
 void blink (void);
@@ -29,7 +37,11 @@ int main (void) {
 
   pcf8591Setup(PINBASE, 0x48);
 
-  wiringPiISR(TRIGGER, INT_EDGE_RISING, blink);
+  wiringPiISR(TRIGGER, INT_EDGE_BOTH, start_pwm);
+
+  while(1) {
+    //printf("waiting for int..."); fflush(stdout);
+  }
 
   return(0);
 
@@ -48,13 +60,20 @@ void blink(void) {
 
 }
 
-
+//while i'm high...
 void start_pwm(void) {
   printf("start_pwm...\n");
   //pwm_freq is read from AIN0
   double pwm_freq;
-  pwm_freq = analogRead();
-  softpwmWrite(ENB1, pwm_freq);
-
+  while(1) {
+    pwm_freq = analogRead(PINBASE + 0); //AIN0
+    printf("pwm: %5.2f\n", pwm_freq);
+    //softpwmWrite(ENB1, pwm_freq); //writing pwm freq to L298N
+    delay(500);
+    //test if TRIGGER is low
+    if(digitalRead(TRIGGER) == 0) {
+      break;
+    }
+  }
 
 }
