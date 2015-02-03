@@ -45,7 +45,6 @@ int main (void) {
   wiringPiISR(JOYSTICK, INT_EDGE_BOTH, start_pwm);
 
   while(1) {
-    //printf("waiting for int..."); fflush(stdout);
     usleep(usecs);
   }
 
@@ -56,20 +55,25 @@ int main (void) {
 
 //while i'm high...
 void start_pwm(void) {
-  printf("start_pwm...\n");
+  //printf("start_pwm...\n");
   //pwm_freq is read from AIN0
   int pwm_freq;
   while(1) {
-    pwm_freq = analogRead(PINBASE + 0); //AIN0
-    pwm_freq = pwm_freq / 2.55;
-    printf("pwm: %d\n", pwm_freq);
-    //softPwmWrite(ENB1, pwm_freq); //writing pwm freq to L298N
-    //pwmWrite(); //hw pwm bcm port 18 range 0-1024
-    delay(500);
     //test if JOYSTICK is low
     if(digitalRead(JOYSTICK) == 0) {
       break;
     }
+
+    pwm_freq = analogRead(PINBASE + 0) / 2.55; //AIN0
+    //pwm_freq = (pwm_freq == 0) ? pwm_freq = 1 : pwm_freq;
+    if (pwm_freq == 0) {
+      pwm_freq = 1;
+    }
+    printf("\rpwm: %d", pwm_freq);
+    fflush(stdout);
+    //softPwmWrite(ENB1, pwm_freq); //writing pwm freq to L298N
+    //pwmWrite(); //hw pwm bcm port 18 range 0-1024
+    delay(500);
   }
 
 }
