@@ -35,6 +35,7 @@ int main (void) {
   wiringPiSetupGpio();
   pinMode(ENB0, OUTPUT);
   pinMode(ENB1, OUTPUT);
+  //pinMode(ENB1, PWM_OUTPUT);
   pinMode(JOYSTICK, INPUT);
 
   softPwmCreate(ENB1, 1, RANGE); //pin, initial value, range
@@ -63,6 +64,7 @@ void start_pwm(void) {
     pwm_freq = pwm_freq / 2.55;
     printf("pwm: %d\n", pwm_freq);
     //softPwmWrite(ENB1, pwm_freq); //writing pwm freq to L298N
+    //pwmWrite(); //hw pwm bcm port 18 range 0-1024
     delay(500);
     //test if JOYSTICK is low
     if(digitalRead(JOYSTICK) == 0) {
