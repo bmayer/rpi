@@ -25,7 +25,6 @@ sudo gpio -g mode 20 down
 //prototypes
 void blink (void);
 void start_pwm (void);
-void stop_pwm (void);
 
 
 int main (void) {
@@ -33,9 +32,9 @@ int main (void) {
   usecs = 100;
 
   wiringPiSetupGpio();
-  pinMode(ENB0, OUTPUT);
+  pinMode(ENB0, OUTPUT); //sw pwm
   pinMode(ENB1, OUTPUT);
-  //pinMode(ENB1, PWM_OUTPUT);
+  //pinMode(ENB1, PWM_OUTPUT); //if using hw pwm
   pinMode(JOYSTICK, INPUT);
 
   softPwmCreate(ENB1, 1, RANGE); //pin, initial value, range

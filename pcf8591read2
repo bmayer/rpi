@@ -9,8 +9,8 @@ from quick2wire.i2c import I2CMaster
 
 ### l298n controller
 ### en[a|b][0|1] pins enable the motor
-enb0 = int(20)
-enb1 = int(21)
+enb0 = int(4)
+enb1 = int(17)
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(enb0, GPIO.OUT)
@@ -23,10 +23,11 @@ pin_index = int(sys.argv[2]) if len(sys.argv) > 2 else 0
 
 with I2CMaster() as i2c:
   adc = PCF8591(i2c, FOUR_SINGLE_ENDED)
-  sei = adc.single_ended_input_count()
-  print('single ended input count: %s' % sei)
-  aout = adc.output()
-  print('AOUT: %s' % aout)
+  ### methods not found...
+  #sei = adc.single_ended_input_count()
+  #print('single ended input count: %i' % sei)
+  #aout = adc.output()
+  #print('AOUT: %s' % aout)
   ### assuming 'pin' is AIN0?
   pin = adc.single_ended_input(pin_index)
     
@@ -41,3 +42,4 @@ with I2CMaster() as i2c:
     #print("read: {} : {}".format(count, pin.value))
     sleep(0.5)
 
+GPIO.cleanup()
