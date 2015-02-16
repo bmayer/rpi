@@ -33,9 +33,13 @@ int main (void) {
   wiringPiSetupGpio();
   pinMode(ENB0, OUTPUT); //sw pwm
   pinMode(ENB1, OUTPUT);
+  digitalWrite(ENB0, 0); //init as low
+  digitalWrite(ENB1, 0); //init as low
   //pinMode(ENB1, PWM_OUTPUT); //if using hw pwm
   pinMode(JSL, INPUT);
   pinMode(JSR, INPUT);
+  digitalWrite(JSL, 0); //init as low
+  digitalWrite(JSR, 0); //init as low
 
   //softPwmCreate(ENB0, 1, RANGE); //pin, initial value, range
   softPwmCreate(ENB1, 1, RANGE); //pin, initial value, range
@@ -63,8 +67,8 @@ void start_pwm(void) {
     //test if JOYSTICK is low
     if(digitalRead(JSL) == 0 && digitalRead(JSR) == 0) {
       printf("\njoystick released\n");
-      //digitalWrite(ENB0, 0);
-      //digitalWrite(ENB1, 0);
+      digitalWrite(ENB0, 0);
+      digitalWrite(ENB1, 0);
       break;
     }
 
