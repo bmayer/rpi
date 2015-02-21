@@ -49,7 +49,7 @@ int main (void) {
   wiringPiISR(JSL, INT_EDGE_BOTH, start_pwm);
   wiringPiISR(JSR, INT_EDGE_BOTH, start_pwm);
 
-  while(1) {
+  while (1) {
     usleep(usecs);
   }
 
@@ -63,9 +63,9 @@ void start_pwm(void) {
   //printf("start_pwm...\n");
   //pwm_freq is read from AIN0
   int pwm_freq;
-  while(1) {
+  while (1) {
     //test if JOYSTICK is low
-    if(digitalRead(JSL) == 0 && digitalRead(JSR) == 0) {
+    if (digitalRead(JSL) == 0 && digitalRead(JSR) == 0) {
       printf("\njoystick released\n");
       digitalWrite(ENB0, 0);
       digitalWrite(ENB1, 0);
