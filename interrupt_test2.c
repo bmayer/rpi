@@ -53,8 +53,8 @@ int main (void) {
   digitalWrite(JSL, 0); //init as low
   digitalWrite(JSR, 0); //init as low
 
-  softPwmCreate(ENB0, 1, RANGE); //pin, initial value, range
-  softPwmCreate(ENB1, 1, RANGE); //pin, initial value, range
+  softPwmCreate(ENB0, 0, RANGE); //pin, initial value, range
+  softPwmCreate(ENB1, 0, RANGE); //pin, initial value, range
 
   pcf8591Setup(PINBASE, 0x48);
 
@@ -82,6 +82,8 @@ void start_pwm(void) {
       printf("\njoystick released\n");
       digitalWrite(ENB0, 0);
       digitalWrite(ENB1, 0);
+      digitalWrite(IN3, 0);
+      digitalWrite(IN4, 0);
       break;
     }
     //test if JOYSTICK is left high
