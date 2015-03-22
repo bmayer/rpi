@@ -9,12 +9,12 @@
 #include <softPwm.h>
 #include <pcf8591.h>
 
-#define ENB0 19 //enable/pwm b motor
+#define ENB0 19 //enable/pwm b motor - [white]
 #define ENB1 26
-#define IN3 5 //motor directoin
-#define IN4 6 //motor direction
-#define JSL 20 //joystick input left
-#define JSR 21 //joystick input right
+#define IN3 5 //motor directoin - [green]
+#define IN4 6 //motor direction - [yellow]
+#define JSL 20 //joystick input left - [orange]
+#define JSR 21 //joystick input right - [blue]
 #define RANGE 100  //pwm range
 #define PINBASE 120  //pcf pinbase
 
@@ -63,6 +63,7 @@ int main (void) {
   wiringPiISR(JSL, INT_EDGE_BOTH, start_pwm);
   wiringPiISR(JSR, INT_EDGE_BOTH, start_pwm);
 
+  // handle ctrl-c interrupt
   if (signal(SIGINT, sig_handler) == SIG_ERR) {
     printf("can't catch SIGINT\n");
   }
@@ -93,14 +94,14 @@ void start_pwm(void) {
     }
     //test if JOYSTICK is left high
     else if (digitalRead(JSL) == 1) {
-      //printf("\rjoystick left");
+      printf("\rjoystick left");
       //fflush(stdout);
       digitalWrite(IN3, 0);
       digitalWrite(IN4, 1);
     }
     //test if JOYSTICK is right high
     else if (digitalRead(JSR) == 1) {
-      //printf("\rjoystick right");
+      printf("\rjoystick right");
       //fflush(stdout);
       digitalWrite(IN3, 1);
       digitalWrite(IN4, 0);
@@ -114,18 +115,19 @@ void start_pwm(void) {
 
     printf("\rpwm: %d", pwm_freq);
     fflush(stdout);
-    //softPwmWrite(ENB0, pwm_freq); //writing pwm freq to L298N
+    softPwmWrite(ENB0, pwm_freq); //writing pwm freq to L298N
     //softPwmWrite(ENB1, pwm_freq); //writing pwm freq to L298N
     delay(500);
   }
 
 }
 
-
+// ctrl-c
 void sig_handler(int signo) {
   if (signo == SIGINT) { 
     printf("SIGINT caught\n");
 
+    // set gpio to 0 before exiting
     digitalWrite(ENB0, 0);
     digitalWrite(IN3, 0);
     digitalWrite(IN4, 0);
